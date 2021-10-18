@@ -41,6 +41,9 @@ class RoomAdmin(admin.ModelAdmin):
         "check_in",
         "check_out",
         "instant_book",
+        "count_amenities",
+        "count_photo",
+        "total_rating",
     )
 
     # ordering = ('name')
@@ -59,13 +62,22 @@ class RoomAdmin(admin.ModelAdmin):
         "house_rule",
     )
 
+    def count_amenities(self, obj):
+        return obj.amenities.count()
+
+    def count_photo(self, obj):
+        return obj.photos.count()
+
 
 @admin.register(models.HouseRule, models.Amenity, models.Facility, models.RoomType)
-class RoomAdmin(admin.ModelAdmin):
+class ItemAdmin(admin.ModelAdmin):
 
     """Item Admin Definition"""
 
-    pass
+    list_display = ("name", "used_by")
+
+    def used_by(self, obj):
+        return obj.rooms.count()
 
 
 @admin.register(models.Photo)
