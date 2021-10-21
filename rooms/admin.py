@@ -3,6 +3,11 @@ from django.utils.html import mark_safe
 from . import models
 
 
+class PhotoInline(admin.TabularInline):
+
+    model = models.Photo
+
+
 @admin.register(models.Room)
 class RoomAdmin(admin.ModelAdmin):
 
@@ -11,7 +16,7 @@ class RoomAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "address", "price")},
+            {"fields": ("name", "description", "country", "city", "address", "price")},
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
@@ -56,6 +61,11 @@ class RoomAdmin(admin.ModelAdmin):
         "house_rule",
         "city",
     )
+
+    raw_id_fields = ("host",)
+
+    inlines = (PhotoInline,)
+
     search_fields = ("city",)
     filter_horizontal = (
         "amenities",
