@@ -16,14 +16,24 @@ class RoomAdmin(admin.ModelAdmin):
     fieldsets = (
         (
             "Basic Info",
-            {"fields": ("name", "description", "country", "city", "address", "price")},
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "country",
+                    "city",
+                    "address",
+                    "price",
+                    "room_type",
+                )
+            },
         ),
         ("Times", {"fields": ("check_in", "check_out", "instant_book")}),
         ("Spaces", {"fields": ("guests", "beds", "bedrooms", "baths")}),
         (
             "More about Spaces",
             {
-                "classes": ("collapse",),
+                # "classes": ("collapse",),
                 "fields": ("amenities", "facilities", "house_rule"),
             },
         ),
@@ -78,6 +88,8 @@ class RoomAdmin(admin.ModelAdmin):
 
     def count_photo(self, obj):
         return obj.photos.count()
+
+    count_photo.short_description = "PHOTO COUNT"
 
 
 @admin.register(models.HouseRule, models.Amenity, models.Facility, models.RoomType)

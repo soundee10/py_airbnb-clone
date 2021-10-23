@@ -13,11 +13,12 @@ class ReservationAdmin(admin.ModelAdmin):
 
     list_display = (
         "room",
-        "in_progress",
+        "status",
         "guest",
         "check_in",
         "check_out",
         "is_finished",
+        "in_progress",
     )
 
     list_filter = ("status",)

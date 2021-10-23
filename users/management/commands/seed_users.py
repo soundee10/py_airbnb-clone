@@ -5,11 +5,14 @@ from users.models import User
 
 class Command(BaseCommand):
 
-    help = "this command creates facilities"
+    help = "this command creates users"
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "--number", default=1, help="how many users do you want to create?"
+            "--number",
+            default=1,
+            type=int,
+            help="how many users do you want to create?",
         )
 
     def handle(self, *args, **options):
