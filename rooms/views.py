@@ -1,9 +1,39 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.core.paginator import EmptyPage, Paginator
+from django.urls import reverse
+from django.utils import timezone
+from django.http import HttpResponse, Http404
+from django.views.generic import ListView, DetailView
 from . import models
 
+# from django.core.paginator import EmptyPage, Paginator
 
+
+class HomeView(ListView):
+    """Home View Definition"""
+
+    model = models.Room
+    paginate_by = 10
+    paginate_orphans = 3
+    ordering = "created"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        now = timezone.now()
+        context["now"] = now
+        return context
+
+
+def room_detail(request, pk):
+    try:
+        room = models.Room.objects.get(pk=pk)
+        return render(request, "rooms/detail.html", {"room": room})
+    except models.Room.DoesNotExist:
+        raise Http404
+        # return redirect(reverse("core:home"))
+
+
+""" 
+# using pagination in manual...
 def all_rooms(request):
     page = request.GET.get("page", 1)
     room_list = models.Room.objects.all()
@@ -13,7 +43,7 @@ def all_rooms(request):
         return render(request, "rooms/home.html", context={"page": rooms})
     except EmptyPage:
         return redirect("/")
-
+"""
 
 """ pagination in manual"""
 """
