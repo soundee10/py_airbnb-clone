@@ -8,7 +8,7 @@ class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=PasswordInput)
 
-    def clean_password(self):
+    def clean(self):
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
         try:
