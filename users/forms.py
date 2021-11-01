@@ -21,11 +21,14 @@ class LoginForm(forms.Form):
             self.add_error("email", forms.ValidationError("User does not exist"))
 
 
-class SignUpForm(forms.Form):
+class SignUpForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name", "email")
 
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
-    email = forms.EmailField()
+    # first_name = forms.CharField(max_length=50)
+    # last_name = forms.CharField(max_length=50)
+    # email = forms.EmailField()
     password = forms.CharField(widget=PasswordInput)
     password1 = forms.CharField(widget=PasswordInput, label="Confirm Password")
 
@@ -46,10 +49,24 @@ class SignUpForm(forms.Form):
         else:
             return password
 
-    def save(self):
+    def save(self, *args, **kwargs):
+        email = self.cleaned_data.get("email")
+        password = self.cleaned_data.get("password")
+        user = super().save(commit=False)
+        user.username = email
+        user.set_password(password)
+        user.save()
+
+
+"""     def save(self):
         first_name = self.cleaned_data.get("first_name")
         last_name = self.cleaned_data.get("last_name")
         email = self.cleaned_data.get("email")
         password = self.cleaned_data.get("password")
 
-        models.User.objects.create_user(email, email, password)
+        user = models.User.objects.create_user(email, email, password)
+        user.first_name = first_name
+        user.last_name = last_name
+        user.save() 
+        These are automatically done by django ModelForm !
+        """
