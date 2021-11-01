@@ -42,8 +42,14 @@ class User(AbstractUser):
     )
     superhost = models.BooleanField(default=False)
 
+    email_confirmed = models.BooleanField(default=False)
+    email_secret = models.CharField(max_length=120, default="", blank=True)
+
     def __str__(self):
         return self.username
 
     def get_absolute_url(self):
         return reverse("rooms:detail", kwargs={"pk": self.pk})
+
+    def verify_email(self):
+        pass
