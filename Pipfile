@@ -12,6 +12,7 @@ psycopg2 = "*"
 flake8 = "*"
 black = "*"
 django-dotenv = "*"
+requests = "*"
 
 [dev-packages]
 flake8 = "*"

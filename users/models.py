@@ -35,6 +35,16 @@ class User(AbstractUser):
 
     CURRENCY_CHOICES = ((CURRENCY_USD, "USD"), (CURRENCY_KRW, "KRW"))
 
+    LOGIN_EMAIL = "EMAIL"
+    LOGIN_GITHUB = "GITHUB"
+    LOGIN_KAKAO = "KAKAO"
+
+    LOGIN_CHOICES = (
+        (LOGIN_EMAIL, "EMAIL"),
+        (LOGIN_GITHUB, "GITHUB"),
+        (LOGIN_KAKAO, "KAKAO"),
+    )
+
     avatar = models.ImageField(upload_to="avatars", blank=True)
     gender = models.CharField(choices=GENDER_CHOICES, max_length=10, blank=True)
     bio = models.TextField(default="", blank=True)
@@ -49,6 +59,9 @@ class User(AbstractUser):
 
     email_verified = models.BooleanField(default=False)
     email_secret = models.CharField(max_length=20, default="", blank=True)
+    login_method = models.CharField(
+        max_length=20, choices=LOGIN_CHOICES, default=LOGIN_EMAIL
+    )
 
     def __str__(self):
         return self.username
