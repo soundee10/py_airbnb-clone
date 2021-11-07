@@ -1,0 +1,25 @@
+{
+  "name": "py_airbnb",
+  "version": "1.0.0",
+  "description": "airbnb_clone",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soundee10/py_airbnb-clone.git"
+  },
+  "scripts": {
+    "css": "gulp"
+  },
+  "homepage": "https://github.com/soundee10/py_airbnb-clone#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-csso": "^4.0.1",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
+    "sass": "^1.43.4"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.0",
+    "tailwindcss": "^2.2.19"
+  }
+}

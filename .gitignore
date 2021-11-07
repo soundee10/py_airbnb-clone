@@ -139,3 +139,5 @@ cython_debug/
 
 #photo
 uploads/
+node_modules/
+.package-lock.json
