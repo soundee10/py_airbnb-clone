@@ -1,10 +1,10 @@
-  <ul class = "flex items-center text-base font-semibold">
+  <ul class = "flex items-center text-base font-semibold h-full">
     
     {% if user.is_authenticated %}
-    <li class="ml-5 mr-3"><a href="{% url "users:logout"%}">Log Out</a></li>
+    <li class="nav_link"><a href="{% url "users:logout"%}">Log Out</a></li>
     {% else %}
-      <li class="ml-5 mr-3"><a href="{% url "users:login"%}">Log In</a></li>
-      <li class="ml-5 mr-3"><a href="{% url "users:signup"%}">Sign up</a></li>
+      <li class="nav_link"><a href="{% url "users:login"%}">Log In</a></li>
+      <li class="nav_link"><a href="{% url "users:signup"%}">Sign up</a></li>
     {% endif %}
       
     
