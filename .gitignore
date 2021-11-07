@@ -141,3 +141,4 @@ cython_debug/
 uploads/
 node_modules/
 .package-lock.json
+package-lock.json

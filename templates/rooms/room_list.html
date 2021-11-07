@@ -1,14 +1,14 @@
 {% extends 'base.html' %} {% block page_name %} Home {% endblock page_name %}
 {%block content%} 
-{{now}}
+<a class="ml-1">{{now}}</a>
 {% for room in object_list %}
-  <h4>
+  <h4 class="ml-3">
     <a href ="{% url "rooms:detail" room.pk %}">
     {{room.name}} / ${{room.price}}
     </a>
   </h4>
 {% endfor %}
-<h5>
+<h5 class="ml-2">
   {% if page_obj.has_previous %}
   <a href="?page={{page_obj.previous_page_number}}">Prev</a>
   {% endif %}
