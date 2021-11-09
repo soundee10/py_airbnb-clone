@@ -1,6 +1,6 @@
    <div class="w-1/4 mb-10 px-3">
-
-      <div class="w-full h-56 bg-cover bg-center rounded-lg mb-1" style="background-image: url({{room.first_photo}});"></div>
+      <a href="{% url 'rooms:detail' room.pk %}">
+            <div class="w-full h-56 bg-cover bg-center rounded-lg mb-1" style="background-image: url({{room.first_photo}});"></div>
             <div class="flex justify-between mb-2 truncate">
                   <div class="w-4/5 overflow-hidden flex">
                      {% if room.host.superhost %}
@@ -14,5 +14,6 @@
                   </span>
             </div>
             <span class="w-11/12 text-black block truncate"> {{room.name}} </span>
+      </a>
                
    </div>

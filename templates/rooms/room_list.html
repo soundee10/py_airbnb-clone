@@ -22,7 +22,7 @@
           <a href="?page={{page_obj.next_page_number}}"><i class="fas fa-arrow-right fa-lg text-green-500"></i></a>
         {% endif %}
 </div>
-        <div class="flex w-full items-center justify-center container">
+        <div class="container mx-auto text-center">
           {% for page_obj in page_obj.paginator.page_range %}
             <a class="font-medium text-lg ml-1" href="?page={{page_obj}}">
               {{page_obj}}
