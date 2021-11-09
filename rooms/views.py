@@ -17,6 +17,7 @@ class HomeView(ListView):
     paginate_by = 10
     paginate_orphans = 3
     ordering = "created"
+    context_object_name = "rooms"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -25,13 +26,18 @@ class HomeView(ListView):
         return context
 
 
-def room_detail(request, pk):
+class RoomDetail(DetailView):
+    model = models.Room
+    
+"""def room_detail(request, pk):
     try:
         room = models.Room.objects.get(pk=pk)
         return render(request, "rooms/detail.html", {"room": room})
     except models.Room.DoesNotExist:
         raise Http404
-        # return redirect(reverse("core:home"))
+        # return redirect(reverse("core:home"))[summary]
+"""
+
 
 
 class SearchView(View):
