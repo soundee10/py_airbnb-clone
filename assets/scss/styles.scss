@@ -27,11 +27,14 @@ form {
   .input {
     @apply mb-2;
     &.has_error{
-      @apply bg-red-500;
+      input {
+        @apply bg-red-200 border-gray-400;
+        :focus{
+          @apply border-gray-400;
+        }
+      }
     }
   }
 }
-
-
 
 @tailwind utilities;
