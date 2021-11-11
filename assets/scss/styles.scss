@@ -24,8 +24,11 @@ input{
 }
 
 form {
-  input {
+  .input {
     @apply mb-2;
+    &.has_error{
+      @apply bg-red-500;
+    }
   }
 }
 
