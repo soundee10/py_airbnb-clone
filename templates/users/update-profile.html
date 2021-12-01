@@ -10,11 +10,16 @@
 {% block content %}
     <div class="container lg:w-5/12 md:w-1/2 xl:w-2/5 mx-auto my-10 flex flex-col items-center border p-6 border-gray-500">
         
-        {% include 'mixins/auth/auth_form.html' with form=form%}
+        {% include 'mixins/auth/auth_form.html' with form=form cta="Update Profile"%}
 
-        <div class="mt-5">
-            </span><a class="font-medium text-green-700" href="{%url 'users:signup' %}">Change Password</a>
-        </div>
+        <h5>logged in with {{object.login_method}}!</h5>
+        
+        {% if object.login_method == "password" %}
+            <div class="mt-5">
+                </span><a class="font-medium text-green-700" href="{%url 'users:password' %}">Change Password</a>
+            </div>
+        {% endif %}
+            
 
     </div>
 

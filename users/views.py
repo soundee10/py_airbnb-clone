@@ -7,6 +7,7 @@ from django.views import View
 from django.views.generic import FormView, DetailView, UpdateView
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import UserCreationForm
 from . import forms, models
 
@@ -214,9 +215,9 @@ class UpdateProfileView(UpdateView):
     model = models.User
     template_name = "users/update-profile.html"
     fields = (
+        "email",
         "first_name",
         "last_name",
-        "avatar",
         "gender",
         "bio",
         "birthdate",
@@ -227,3 +228,11 @@ class UpdateProfileView(UpdateView):
     def get_object(self, queryset=None):
         return self.request.user
     
+    def form_valid(self, form):
+        email = form.cleaned_data.get("email")
+        self.object.username = email
+        self.object.save()
+        return super().form_valid(form)
+    
+class UpdatePasswordView(PasswordChangeView):
+    template_name = "users/update-password.html"
