@@ -17,7 +17,6 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
 
     template_name = "users/login.html"
     form_class = forms.LoginForm
-    success_url = reverse_lazy("core:home")
 
     def form_valid(self, form):
         email = form.cleaned_data.get("email")
@@ -27,18 +26,15 @@ class LoginView(mixins.LoggedOutOnlyView, FormView):
             login(self.request, user)
         return super().form_valid(form)
 
-    """def post(self, request):
-        form = forms.LoginForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get("email")
-            password = form.cleaned_data.get("password")
-            user = authenticate(request, username=email, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect(reverse("core:home"))
-        return render(request, "users/login.html", {"form": form})"""
-
-
+    def get_success_url(self):
+        next_arg = self.request.GET.get("next") #brings next = arg
+        if next_arg is not None:
+            return next_arg
+        else:
+            return reverse("core:home")
+        
+        
+        
 def log_out(request):
     logout(request)
     messages.info(request, f"Good bye!")
@@ -212,7 +208,7 @@ class UserProfileView(DetailView):
     model = models.User
     context_object_name = "user_obj"
     
-class UpdateProfileView(SuccessMessageMixin, UpdateView):
+class UpdateProfileView(mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateView):
     
     model = models.User
     template_name = "users/update-profile.html"
@@ -242,7 +238,7 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
         form = super().get_form(form_class=form_class)
         form.fields["birthdate"].widget.attrs = {"placeholder": "Birthdate"}
         return form
-class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
+class UpdatePasswordView(mixins.EmailLoginOnlyView, mixins.LoggedInOnlyView, SuccessMessageMixin, PasswordChangeView):
     template_name = "users/update-password.html"
     #success_url = revse
     success_message = "Password changed!"
