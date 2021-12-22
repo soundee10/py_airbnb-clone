@@ -1,0 +1,13 @@
+<form method="POST" action"{% url "users:signup" %} class="w-11/12" enctype="multipart/form-data">
+    {% csrf_token %} 
+    {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <span class="text-red-600 font-medium text-sm">{{error}}</span>
+        {% endfor %}
+    {% endif %}
+
+    {% for field in form %}
+       {% include 'mixins/room/room_input.html' with field=field %}
+    {% endfor %}
+    <button class='btn text-white bg-red-400 mb-2'>{{cta}}</button>
+</form>
