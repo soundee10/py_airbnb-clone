@@ -3,11 +3,12 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.urls import reverse
 from django.http import HttpResponse, Http404
-from django.views.generic import ListView, DetailView, View, UpdateView
+from django.views.generic import ListView, DetailView, View, UpdateView, FormView
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import CreateView
 from users import mixins as user_mixins
 from . import models, forms
 
@@ -191,3 +192,17 @@ class EditPhotoView(user_mixins.LoggedInOnlyView, SuccessMessageMixin, UpdateVie
         room_pk = self.kwargs.get("room_pk")
         print(room_pk)
         return reverse("rooms:photos", kwargs={"pk": room_pk})
+    
+class AddPhotoview(user_mixins.LoggedInOnlyView, FormView):
+    
+    model = models.Photo
+    template_name = "rooms/photo_create.html"
+    fields = ("caption", "file")
+    form_class = forms.CreatePhotoForm
+    success_message = "Photo added!!"
+    
+    def form_valid(self, form):
+        pk = self.kwargs.get('pk')
+        form.save(pk)
+        messages.success(self.request, "Photo uploaded!!")
+        return redirect(reverse("rooms:photos", kwargs={'pk': pk}))

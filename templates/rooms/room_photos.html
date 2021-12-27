@@ -10,6 +10,9 @@
 {% block content %}
     <div class="container lg:w-5/12 md:w-1/2 xl:w-4/5 mx-auto my-10 flex flex-col p-6">
         
+            <div class="my-5 w-full">
+                <a href="{% url 'rooms:add-photo' room.pk%}" class="btn-link w-1/2 block"> Upload Photo </a>
+            </div>
         
             {% for photo in room.photos.all %}
                 <div class="mb-5 border p-6 border-gray-500 flex justify-between">
@@ -25,7 +28,7 @@
             {% endfor %}
         
             <div class="flex justify-center mt-5">
-                <a href="{% rul 'rooms:edit' room.pk%}" class="text-green-500 font-medium text-2xl"> Back to edit room</a>
+                <a href="{% url 'rooms:edit' room.pk%}" class="text-green-500 font-medium text-2xl"> Back to edit room</a>
             </div>
 
     </div>
