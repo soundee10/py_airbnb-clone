@@ -25,12 +25,12 @@ class Reservation(core_models.TimeStampedModel):
     STATUS_CANCELED = "canceled"
 
     STATUS_CHOICES = (
-        (STATUS_PENDING, "pending"),
-        (STATUS_CONFIRMED, "confirmed"),
-        (STATUS_CANCELED, "canceled"),
+        (STATUS_PENDING, "Pending"),
+        (STATUS_CONFIRMED, "Confirmed"),
+        (STATUS_CANCELED, "Canceled"),
     )
 
-    status = models.CharField(choices=STATUS_CHOICES, max_length=50)
+    status = models.CharField(choices=STATUS_CHOICES,default="pending", max_length=50)
     guest = models.ForeignKey(
         "users.User", related_name="reservations", on_delete=models.CASCADE
     )
@@ -39,7 +39,7 @@ class Reservation(core_models.TimeStampedModel):
     )
     check_in = models.DateField()
     check_out = models.DateField()
-    objects = managers.CustomReservationManager
+    objects = managers.CustomReservationManager()
     
     def __str__(self):
         return f"{self.room} - {self.check_in}"
