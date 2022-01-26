@@ -1,9 +1,11 @@
+{% load i18n %}
 <footer class = "container mx-auto text-center py-10 border-t font-medium flex flex-col text-gray-500">
     <span>
-        Please do not copy us.
+        {% trans "Please do not copy us." %}
+        
     </span>
     <span>
-        &copy; 2021 Tbnb, Inc. All rights reserved. 
+        &copy; 2021 Tbnb, Inc. {% trans "All rights reserved" %}. 
     </span>
 </footer>
     

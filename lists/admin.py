@@ -10,7 +10,7 @@ class ListAdmin(admin.ModelAdmin):
 
     list_display = (
         "name",
-        "users",
+        "user",
         "count_rooms",
     )
     filter_horizontal = ("rooms",)
