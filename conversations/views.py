@@ -1,8 +1,10 @@
+from re import L
 from django.db.models import Q
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import DetailView
+from django.http import Http404
+from django.views.generic import View
 from users import models as user_models
-from . import models
+from . import models,forms
 
 def go_conversation(request, a_pk, b_pk):
     user_one = user_models.User.objects.get_or_none(pk=a_pk)
@@ -19,6 +21,25 @@ def go_conversation(request, a_pk, b_pk):
         return redirect(reverse("conversations:detail", kwargs={"pk": conversation.pk}))
 
 
-class ConversationDetailView(DetailView):
-    model = models.Conversation
+class ConversationDetailView(View):
 
+    def get(self, *args, **kwargs):
+        pk = kwargs.get("pk")
+        conversation = models.Conversation.objects.get_or_none(pk=pk)
+        if not conversation:
+            raise Http404()
+        return render(self.request, "conversations/conversation_detail.html", {'conversation': conversation})
+
+    def post(self, *args, **kwargs):
+        message = self.request.POST.get("message", None)
+        pk = kwargs.get("pk")
+        conversation = models.Conversation.objects.get_or_none(pk=pk)
+        if not conversation:
+            raise Http404()
+        if message is not None:
+            models.Message.objects.create(
+                message=message,
+                user=self.request.user,
+                Conversation=conversation
+                )
+        return redirect(reverse("conversations:detail", kwargs={"pk": pk}))
